@@ -7,9 +7,9 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 const Comment = memo(({ comment, formatDate, index }) => (
-    <div 
+    <div
         className="px-4 pt-4 pb-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group hover:shadow-lg hover:-translate-y-0.5"
-        
+
     >
         <div className="flex items-start gap-3 ">
             {comment.profileImage ? (
@@ -67,7 +67,7 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
     const handleSubmit = useCallback((e) => {
         e.preventDefault();
         if (!newComment.trim() || !userName.trim()) return;
-        
+
         onSubmit({ newComment, userName, imageFile });
         setNewComment('');
         setImagePreview(null);
@@ -85,7 +85,7 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
                 <input
                     type="text"
                     value={userName}
-                    onChange={(e) => setUserName(e.target.value)}z
+                    onChange={(e) => setUserName(e.target.value)}
                     placeholder="Enter your name"
                     className="w-full p-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
                     required
@@ -197,7 +197,7 @@ const Komentar = () => {
     useEffect(() => {
         const commentsRef = collection(db, 'portfolio-comments');
         const q = query(commentsRef, orderBy('createdAt', 'desc'));
-        
+
         return onSnapshot(q, (querySnapshot) => {
             const commentsData = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
@@ -217,7 +217,7 @@ const Komentar = () => {
     const handleCommentSubmit = useCallback(async ({ newComment, userName, imageFile }) => {
         setError('');
         setIsSubmitting(true);
-        
+
         try {
             const profileImageUrl = await uploadImage(imageFile);
             await addDoc(collection(db, 'portfolio-comments'), {
@@ -273,7 +273,7 @@ const Komentar = () => {
                     <p className="text-sm">{error}</p>
                 </div>
             )}
-            
+
             <div >
                 <CommentForm onSubmit={handleCommentSubmit} isSubmitting={isSubmitting} error={error} />
             </div>
@@ -286,9 +286,9 @@ const Komentar = () => {
                     </div>
                 ) : (
                     comments.map((comment, index) => (
-                        <Comment 
-                            key={comment.id} 
-                            comment={comment} 
+                        <Comment
+                            key={comment.id}
+                            comment={comment}
                             formatDate={formatDate}
                             index={index}
                         />
